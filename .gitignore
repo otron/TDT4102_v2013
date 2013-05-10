@@ -1,0 +1,14 @@
+# Visual studio files
+*.opensdf
+*.sdf
+*.sln
+*.suo
+*.vcxproj*
+*.tlog
+*.log
+*.exe
+*.lastbuildstate
+*.ipch
+
+*.obj
+Debug/
