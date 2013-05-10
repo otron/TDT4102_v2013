@@ -17,6 +17,7 @@ class Matrix2x2 {
 		const double getValue(int row, int column);
 		void printMatrix();
 		Matrix2x2();
+		Matrix2x2(double a, double b, double c, double d);
 		Matrix2x2(double arr[]);
 
 		//Overloading them operators, yo.
@@ -33,6 +34,13 @@ class Matrix2x2 {
 		// Perhaps to avoid copying it?
 		// Man, suddenly pointers and references and shit.
 		// I'm don't feel ready for this.
+
+		// Part 2-c
+		Matrix2x2 &operator *=(const Matrix2x2 &rhs);
+
+		// Part 2-d
+		friend std::ostream& operator <<(std::ostream& outs, const Matrix2x2 &rhs);
+
 };
 
 }

@@ -38,6 +38,12 @@ namespace matrices {
 	}
 
 	// Part 1-e
+	Matrix2x2::Matrix2x2(double a, double b, double c, double d) {
+		data[0] = a;
+		data[1] = b;
+		data[2] = c;
+		data[3] = d;
+	}
 	Matrix2x2::Matrix2x2(double arr[]) {
 		for (int i = 0; i < 4; i++) {
 			data[i] = arr[i];
@@ -103,7 +109,6 @@ namespace matrices {
 				for (int k = 0; k < 2; k++) {
 					d += this->data[i*2+k] * rhs.data[k*2+j];
 				}
-				printf("\n");
 				// Right, so I can only call const methods on a const object.
 				// But I CAN just access their private member variables directly
 				// ooh but that's okay because they're const so I can't change anything!
@@ -116,4 +121,31 @@ namespace matrices {
 		}
 		return res;
 	}
+
+	// Part 2-c
+	Matrix2x2 &Matrix2x2::operator *=(const Matrix2x2 &rhs) {
+		/* Q: Can I reuse code I have used earlier?
+			A: Yes: See below.
+		   Q: Why can we not implement *= the same way += and -=
+		   		were implemented?
+		   	A: Because * uses the matrices values more than once.
+		*/
+		*this = *this * rhs;
+		return *this;
+	}
+
+	// Part 2-d
+	std::ostream& operator <<(std::ostream& outs, const Matrix2x2 &rhs) {
+		// just keep <<'ing stuff into outs.
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 2; j++) {
+				outs << rhs.data[i*2+j] << "\t";
+			}
+			outs << std::endl;
+		}
+		return outs;
+		// << has to return an ostream otherwise
+		// we can't chain <<.
+	}
+
 }

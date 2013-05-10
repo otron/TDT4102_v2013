@@ -36,12 +36,35 @@ int main() {
 	dicks += herp;
 	dicks.printMatrix();
 
+	dicks *= herp;
+	dicks.printMatrix();
+
 	// Testing *operator
 	printf("\nTesting *operator overloading\n");
-	dicks.printMatrix();
+	//dicks.printMatrix();
+	cout << dicks;
 	Matrix2x2 ident;
 	dicks = dicks * ident;
 	dicks.printMatrix();
+	cout << dicks;
+
+	// Part 2-e
+	printf("\nBEHOLD: PART 2-E\n\n");
+	Matrix2x2 A(1, 2, 3, 4);
+	cout << "A\n" << A << endl;
+	Matrix2x2 B(4, 3, 2, 1);
+	cout << "B\n" << B << endl;
+	Matrix2x2 C(1.0, 3.0, 1.5, 2.0);
+	cout << "C\n" << C << endl;
+
+	Matrix2x2 D;
+	cout << "D = A + B\n";
+	D = A + B;
+	cout << D << endl;
+	cout << "D = D * B - A + C\n";
+	D = D * B - A + C;
+	cout << D << endl;
+
 	cin.get();
 }
 
