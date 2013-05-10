@@ -7,10 +7,6 @@
 
 #include <time.h> // time
 #include <stdlib.h> //srand, rand
-#include <stdio.h> //printf?
-#include <iostream> //cin, cout
-#include <string> //strings
- #include <sstream> //string streams
 
 #include "main.h"
 #include "Matrix2x2.h"
@@ -21,42 +17,17 @@ using namespace matrices;
 int main() {
 	srand(time(0)); // seed the randomizationizer
 
-	for (int i = 0; i < 10; i++) {
-		cout << ((double) rand() / (double) RAND_MAX) * (double) rand();
-		cout << endl << endl;
-	}
-
-	// code to test 2-a and b
+	// Part 1-c.
+	// "Test the code you've written so far by creating
+	// a 2x2 matrix and printing it to the console."
+	printf("Part 1-c: Does the matrix thing work?\n");
+	Matrix2x2 dicks;
+	dicks.setValue((double) 3, 0,0);
+	dicks.setValue((double) -1, 0,1);
+	dicks.setValue((double) 0, 1,0);
+	dicks.setValue((double) 5, 1,1);
+	// dicks should now be [[3, -1],[0,5]
+	dicks.printMatrix();
 	cin.get();
-}
-
-string testMatrix2x2Set(Matrix2x2 test) {
-	//assumes the get-function works,
-	//as we don't have direct access to matrix2x2 private members
-	double dat[4];
-	for (int i = 0; i < 4; i++) {
-		dat[i] = ((double) rand() / (double) RAND_MAX) * (double) rand();
-
-	}
-	return "";
-}
-string testMatrix2x2Get(Matrix2x2 test, double arr[]) {
-	string res = ""; // I wonder what the default constructor for string does.
-	bool failure = false;
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			if (test.getValue(i, j) != arr[i*2+j]) {
-				failure = true;
-				stringstream ss;
-				ss << "(" << i << "," << j << ") was ";
-				ss << test.getValue(i, j) << " but should be " << arr[i*2+j];
-				ss << endl;
-				res += ss.str();
-			}
-		}
-	}
-	if (!failure)
-		res += "getValue seems to be working.\n";
-	return res;
 }
 

@@ -1,6 +1,11 @@
 #ifndef MATRIX2X2_H
 #define MATRIX2X2_H
 
+#include <iostream> //cin, cout
+#include <string> //strings
+#include <sstream> //string streams
+#include <stdio.h> //printf?
+
 namespace matrices {
 
 class Matrix2x2 {
@@ -10,11 +15,10 @@ class Matrix2x2 {
 	public:
 		void setValue(double value, int row, int column);
 		double getValue(int row, int column);
+		void printMatrix();
+		//couldn't figure out how to test set/get without direct access to the data
 };
 
-// tests
-bool testMatrix2x2Get(Matrix2x2 test, double arr[]);
-bool testMatrix2x2Set(Matrix2x2 test);
 }
 
 

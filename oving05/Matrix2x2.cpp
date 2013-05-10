@@ -3,6 +3,7 @@
 namespace matrices {
 
 	void Matrix2x2::setValue(double value, int row, int column) {
+		//printf("Setting (%i,%i)[%i] to %f\n", row, column, getPos(row, column), value);
 		this->data[getPos(row, column)] = value;
 	}
 
@@ -20,5 +21,10 @@ namespace matrices {
 			a more general version would be
 			row*(column size) + column
 		*/
+	}
+
+	void Matrix2x2::printMatrix() {
+		printf("%f\t%f\n%f\t%f\n",
+			data[0], data[1], data[2], data[3]);
 	}
 }
