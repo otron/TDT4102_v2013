@@ -14,9 +14,25 @@ class Matrix2x2 {
 		int getPos(int row, int column);
 	public:
 		void setValue(double value, int row, int column);
-		double getValue(int row, int column);
+		const double getValue(int row, int column);
 		void printMatrix();
-		//couldn't figure out how to test set/get without direct access to the data
+		Matrix2x2();
+		Matrix2x2(double arr[]);
+
+		//Overloading them operators, yo.
+		// Part 2-a
+		Matrix2x2 &operator +=(const Matrix2x2 &rhs);
+		Matrix2x2 &operator -=(const Matrix2x2 &rhs);
+		// Part 2-b
+		Matrix2x2 operator +(const Matrix2x2 &rhs) const;
+		Matrix2x2 operator -(const Matrix2x2 &rhs) const;
+		Matrix2x2 operator *(const Matrix2x2 &rhs) const;
+		// wait why is there a & preceding operator in
+		// the declaration of += but not +?
+		// it means it returns a reference to a private member.
+		// Perhaps to avoid copying it?
+		// Man, suddenly pointers and references and shit.
+		// I'm don't feel ready for this.
 };
 
 }
