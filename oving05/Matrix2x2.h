@@ -5,16 +5,17 @@
 #include <string> //strings
 #include <sstream> //string streams
 #include <stdio.h> //printf?
+#include "Vector2.h"
 
 namespace matrices {
 
 class Matrix2x2 {
 	private:
 		double data[4];
-		int getPos(int row, int column);
+		int getPos(int row, int column) const;
 	public:
 		void setValue(double value, int row, int column);
-		const double getValue(int row, int column);
+		double getValue(int row, int column) const;
 		void printMatrix();
 		Matrix2x2();
 		Matrix2x2(double a, double b, double c, double d);
@@ -22,6 +23,10 @@ class Matrix2x2 {
 
 		// Part 4-a
 		double det() const;
+		// Part 4-b
+		Matrix2x2 inverse() const;
+		// Part 4-c
+		Vector2 operator *(const Vector2 &rhs) const;
 
 		//Overloading them operators, yo.
 		// Part 2-a

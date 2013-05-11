@@ -7,11 +7,11 @@ namespace matrices {
 		this->data[getPos(row, column)] = value;
 	}
 
-	const double Matrix2x2::getValue(int row, int column) {
+	double Matrix2x2::getValue(int row, int column) const {
 		return this->data[getPos(row, column)];
 	}
 
-	int Matrix2x2::getPos(int row, int column) {
+	int Matrix2x2::getPos(int row, int column) const {
 		return (row*2 + column);
 		/* Because:
 			0,0 => 0*2 + 0 = 0
@@ -143,7 +143,13 @@ namespace matrices {
 	  	Only applicable to member functions.
 	  	Means altering member variables is not permitted
 	  	within the function body, excepting member variables
-	  	tagget with mutable.
+	  	tagged with mutable.
+	  	Calling a non-const member function from a const member function
+	  	gives a compiler error.
+
+	  * const prefixing a function's return type
+	  	Means it returns a constant?
+	  	Apparently this is an outdated practice?
 
 	  * & prefixing a function
 	  	Means the return type of the function is a reference.
@@ -173,6 +179,32 @@ namespace matrices {
 	}
 
 	// Part 4-a
-	
+	double Matrix2x2::det() const {
+		// det(A) = (0,0)*(1,1) - (0,1)*(1,0)
+		return (data[0]*data[3] - data[1]*data[2]);
+	}
+
+	// Part 4-b
+	Matrix2x2 Matrix2x2::inverse() const {
+		double d = this->det();
+		if (d == 0) // Abort.
+			return Matrix2x2(0, 0, 0, 0);
+
+		double od = 1/d;
+		return Matrix2x2(od*data[0], od*(-data[1]), od*(-data[2]), od*data[3]);
+	}
+
+	// Part 4-c -- matrix/vector product
+	Vector2 Matrix2x2::operator *(const Vector2 &rhs) const {
+		/* well that's nice. We cannot call non-const member functions
+			on a const object.
+		*/
+		double one = this->getValue(0,0)*rhs.getValue(0) +
+						this->getValue(0,1)*rhs.getValue(1);
+		double two = this->getValue(1,0)*rhs.getValue(0) +
+						this->getValue(1,1)*rhs.getValue(1);
+		Vector2 v = Vector2(one, two);
+		return v;
+	}
 
 }

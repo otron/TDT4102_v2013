@@ -15,6 +15,9 @@
 using namespace std;
 using namespace matrices;
 
+void Part5();
+
+
 int main() {
 	srand(time(0)); // seed the randomizationizer
 
@@ -71,6 +74,31 @@ int main() {
 	vec.setValue(3.4, 0);
 	vec.setValue(5, 1);
 	cout << vec;
+	Part5();
+
+	cin.get();
 	cin.get();
 }
 
+// Part 5 involves solving some system of linear equations using
+// the vector2 and matrix2x2 classes
+void Part5() {
+	printf("\nPutting it all together.\n\n");
+	double inp[6];
+	printf("We require six doubles.\n");
+	for (int i = 0; i < 6; i++) {
+		cin >> inp[i];
+	}
+	Matrix2x2 derp = Matrix2x2(inp[0], inp[1], inp[2], inp[3]);
+	Vector2 yo = Vector2(inp[4], inp[5]);
+	printf("And your numbers arrrreee\n");
+	cout << derp << yo << endl;
+	if (derp.det() == 0) {
+		printf("Oh my. I'm afraid there's no possible solution to this.\n");
+	} else {
+		Matrix2x2 inv = derp.inverse();
+		Vector2 answer = inv * yo;
+		printf("Aaaand the answer is...\n");
+		cout << answer;
+	}
+}

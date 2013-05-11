@@ -20,7 +20,7 @@ public:
 	void setValue(double value, int index) {
 		data[index] = value;
 	}
-	double getValue(int index) {
+	double getValue(int index) const {
 		return data[index];
 	}
 	// that's right, we're doing this in the header now.
