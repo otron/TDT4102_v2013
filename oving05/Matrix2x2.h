@@ -20,10 +20,13 @@ class Matrix2x2 {
 		Matrix2x2(double a, double b, double c, double d);
 		Matrix2x2(double arr[]);
 
+		// Part 4-a
+		double det() const;
+
 		//Overloading them operators, yo.
 		// Part 2-a
 		Matrix2x2 &operator +=(const Matrix2x2 &rhs);
-		Matrix2x2 operator -=(const Matrix2x2 &rhs);
+		Matrix2x2 &operator -=(const Matrix2x2 &rhs);
 		// Part 2-b
 		Matrix2x2 operator +(const Matrix2x2 &rhs) const;
 		Matrix2x2 operator -(const Matrix2x2 &rhs) const;

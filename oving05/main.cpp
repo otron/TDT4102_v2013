@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "Matrix2x2.h"
+#include "Vector2.h"
 
 using namespace std;
 using namespace matrices;
@@ -65,6 +66,11 @@ int main() {
 	D = D * B - A + C;
 	cout << D << endl;
 
+	// Testing Part 3
+	Vector2 vec;
+	vec.setValue(3.4, 0);
+	vec.setValue(5, 1);
+	cout << vec;
 	cin.get();
 }
 

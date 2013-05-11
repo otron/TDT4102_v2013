@@ -172,4 +172,7 @@ namespace matrices {
 		// we can't chain <<.
 	}
 
+	// Part 4-a
+	
+
 }
