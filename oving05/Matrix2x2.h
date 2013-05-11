@@ -23,7 +23,7 @@ class Matrix2x2 {
 		//Overloading them operators, yo.
 		// Part 2-a
 		Matrix2x2 &operator +=(const Matrix2x2 &rhs);
-		Matrix2x2 &operator -=(const Matrix2x2 &rhs);
+		Matrix2x2 operator -=(const Matrix2x2 &rhs);
 		// Part 2-b
 		Matrix2x2 operator +(const Matrix2x2 &rhs) const;
 		Matrix2x2 operator -(const Matrix2x2 &rhs) const;

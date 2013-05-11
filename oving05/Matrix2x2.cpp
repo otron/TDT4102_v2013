@@ -133,6 +133,30 @@ namespace matrices {
 		*this = *this * rhs;
 		return *this;
 	}
+	/* A note on const and &:
+	  * const prefixing a parameter:
+	  	the variable is considered a constant within
+	  	the function's body. I assume it can't be passed
+	  	as a non-const to another function then.
+
+	  * const postfixing a function:
+	  	Only applicable to member functions.
+	  	Means altering member variables is not permitted
+	  	within the function body, excepting member variables
+	  	tagget with mutable.
+
+	  * & prefixing a function
+	  	Means the return type of the function is a reference.
+	  	'this' is dereferenced in the += and -= operator overloadings
+	  	because of, uh... reasons?
+
+	  * & prefixing a paramater
+	  	Means the paramater is passed as a reference.
+	  	Also known as "call by reference": changes made on the
+	  	parameter within the function are applied to the variable,
+	  	because it's not just a copy.
+
+	*/
 
 	// Part 2-d
 	std::ostream& operator <<(std::ostream& outs, const Matrix2x2 &rhs) {
