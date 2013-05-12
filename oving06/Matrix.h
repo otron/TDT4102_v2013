@@ -11,6 +11,8 @@ private:
 	unsigned int rows, columns; //that's how I'll store the dimensions.
 	double* data; //who needs doublepointers man those things are wack anyway.
 	int getPos(int r, int c) const; //converts i,j to a position in data
+	double &refToElement(int r, int c) const;
+	bool hasSameDimensions(const Matrix &other) const; // returns true if other and this have equal rows and columns
 public:
 	// Part 2-b: Constructing the constructors.
 	Matrix();
@@ -45,10 +47,20 @@ public:
 	// a class that aren't member functions, yet for some reason
 	// could use access to the class' private members.
 
-	// Part 3-a: the deepest of copies
+	// Part 3: the deepest of copies
 	Matrix &operator =(const Matrix &rhs);
 	Matrix(const Matrix &target); // copy constructor.
 	void invalidate(); //wait should this even be public?
+
+	// Part 4: Overloading operators.
+	// Part 4-a
+	Matrix &operator +=(const Matrix &rhs);
+	Matrix &operator -=(const Matrix &rhs);
+
+	// Part 4-b
+	Matrix operator -(const Matrix &rhs) const;
+	Matrix operator +(const Matrix &rhs) const;
+	Matrix operator *(const Matrix &rhs) const;
 };
 
 #endif 

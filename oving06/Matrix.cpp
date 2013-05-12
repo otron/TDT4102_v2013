@@ -7,6 +7,8 @@ Matrix::Matrix() {
 	//that a matrix is invalid.
 	//ooohhh.
 	data = 0;
+	columns = 0;
+	rows = 0;
 }
 
 // for some reason the keyword 'explicit' is only supposed to be
@@ -68,7 +70,7 @@ ostream &operator <<(ostream &outs, const Matrix &rhs) {
 
 // Part 3-a: the deepest of copies
 Matrix &Matrix::operator =(const Matrix &rhs) {
-	if (!rhs.isValid) {
+	if (!rhs.isValid()) {
 		this->invalidate();
 		return *this;
 	}
@@ -77,7 +79,7 @@ Matrix &Matrix::operator =(const Matrix &rhs) {
 	if (this->getHeight() != rhs.getHeight() || this->getWidth() != rhs.getHeight()) {
 		this->rows = rhs.rows;
 		this->columns = rhs.columns;
-		this->data = new double*[rows*columns];
+		this->data = new double[rows*columns];
 	}
 
 	// all right then now to copy the values from rhs over to this
@@ -99,14 +101,14 @@ Matrix::Matrix(const Matrix &target)
 	: rows(target.rows)
 	, columns(target.columns)
 	{
-		if (!target.isValid) {
+		if (!target.isValid()) {
 			this->data = 0;
 			return; // that's all we need to do for invalid matrices.
 		}
 		// for valid ones, however, we need to copy the data from target to this.
-		this->data = new double*[rows*columns];
-		for (int r = 0; r < rows; r++)
-			for (int c = 0; c < columns; c++)
+		this->data = new double[rows*columns];
+		for (unsigned int r = 0; r < rows; r++)
+			for (unsigned int c = 0; c < columns; c++)
 				setElement(target.getElement(r,c), r, c);
 	// aand that's it.
 }
@@ -119,3 +121,66 @@ void Matrix::invalidate() {
 	this->columns = 0;
 }
 
+// Part 4-a
+Matrix &Matrix::operator +=(const Matrix &rhs) {
+	// we can't add two matrices together unless their sizes match up
+	if (getHeight() != rhs.getHeight() || getWidth() != getHeight()) {
+		// although the text doesn't specify what's to happen if this is the case.
+		this->invalidate(); //eh.
+		return *this;
+	}
+	// The matrices have the same dimensions so let's apply some addition.
+	for (int r = 0; r < this->getWidth(); r++)
+		for (int c = 0; c < this->getHeight(); c++) {
+			this->setElement(this->getElement(r,c) + rhs.getElement(r,c),
+				r, c);
+			// hrm, that's cumbersome to type.
+	}
+
+}
+
+double &Matrix::refToElement(int r, int c) const {
+	return data[getPos(r, c)];
+	// it's slightly confusing how I don't have to specify that
+	// the return value is a reference inside the function's body.
+}
+
+bool Matrix::hasSameDimensions(const Matrix &other) const {
+	if (this->getHeight() != other.getHeight() || this->getWidth() != other.getWidth()) {
+		return false;
+	}
+	return true;
+}
+
+Matrix &Matrix::operator -=(const Matrix &rhs) {
+	if (this->hasSameDimensions(rhs) == false) {
+		this->invalidate();
+		return *this;
+	}
+	for (int r = 0; r < this->getWidth(); r++)
+		for (int c = 0; c < this->getHeight(); r++) {
+			this->refToElement(r,c) -= rhs.getElement(r,c);
+		}
+}
+
+// Part 4-b
+Matrix Matrix::operator -(const Matrix &rhs) const {
+	// Remember how we expanded that expression back in Vector2.cpp?
+	Matrix m = Matrix(*this);
+	m -= rhs;
+	return m;
+}
+
+Matrix Matrix::operator +(const Matrix &rhs) const {
+	return Matrix(*this) += rhs;
+}
+
+Matrix Matrix::operator *(const Matrix &rhs) const {
+	// matrix multiplication is only allowed with an MxN and NxP matrix.
+	// The result is an MxP matrix.
+	if (this->getHeight() != rhs.getWidth()) {
+		Matrix m; //the default constructor creates an invalid matrix.
+		return Matrix();
+	}
+
+}
