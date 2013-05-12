@@ -61,6 +61,11 @@ public:
 	Matrix operator -(const Matrix &rhs) const;
 	Matrix operator +(const Matrix &rhs) const;
 	Matrix operator *(const Matrix &rhs) const;
+
+	// Part 4-c
+	Matrix &operator *=(const Matrix &rhs);
+
+
 };
 
 #endif 

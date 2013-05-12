@@ -70,7 +70,7 @@ ostream &operator <<(ostream &outs, const Matrix &rhs) {
 
 // Part 3-a: the deepest of copies
 Matrix &Matrix::operator =(const Matrix &rhs) {
-	if (!rhs.isValid()) {
+	if (rhs.isValid() == false) {
 		this->invalidate();
 		return *this;
 	}
@@ -96,15 +96,19 @@ Matrix &Matrix::operator =(const Matrix &rhs) {
 	return *this;
 }
 
-Matrix::Matrix(const Matrix &target)
+	
+Matrix::Matrix(const Matrix &target) 
 	//here's a new thing I just found out about: list initialization.
 	: rows(target.rows)
 	, columns(target.columns)
+	, data(0)
 	{
-		if (!target.isValid()) {
-			this->data = 0;
-			return; // that's all we need to do for invalid matrices.
+		if (target.isValid() == false) {
+			return; // that's all we need to do now;
+			//we've already copied rhs' width and height.
 		}
+		//this->columns = target.columns;
+		//this->rows = target.rows;
 		// for valid ones, however, we need to copy the data from target to this.
 		this->data = new double[rows*columns];
 		for (unsigned int r = 0; r < rows; r++)
@@ -140,6 +144,7 @@ Matrix &Matrix::operator +=(const Matrix &rhs) {
 }
 
 double &Matrix::refToElement(int r, int c) const {
+
 	return data[getPos(r, c)];
 	// it's slightly confusing how I don't have to specify that
 	// the return value is a reference inside the function's body.
@@ -158,13 +163,15 @@ Matrix &Matrix::operator -=(const Matrix &rhs) {
 		return *this;
 	}
 	for (int r = 0; r < this->getWidth(); r++)
-		for (int c = 0; c < this->getHeight(); r++) {
+		for (int c = 0; c < this->getHeight(); c++) {
 			this->refToElement(r,c) -= rhs.getElement(r,c);
 		}
 }
 
 // Part 4-b
 Matrix Matrix::operator -(const Matrix &rhs) const {
+	if (this->hasSameDimensions(rhs) == false)
+		return Matrix();
 	// Remember how we expanded that expression back in Vector2.cpp?
 	Matrix m = Matrix(*this);
 	m -= rhs;
@@ -172,15 +179,36 @@ Matrix Matrix::operator -(const Matrix &rhs) const {
 }
 
 Matrix Matrix::operator +(const Matrix &rhs) const {
-	return Matrix(*this) += rhs;
+	if (this->hasSameDimensions(rhs) == false)
+		return Matrix();
+	Matrix m = Matrix(*this);
+	m += rhs;
+	return m;
 }
 
 Matrix Matrix::operator *(const Matrix &rhs) const {
 	// matrix multiplication is only allowed with an MxN and NxP matrix.
 	// The result is an MxP matrix.
-	if (this->getHeight() != rhs.getWidth()) {
-		Matrix m; //the default constructor creates an invalid matrix.
+	if (this->isValid() == false || this->getHeight() != rhs.getWidth()) {
+		//the default constructor creates an invalid matrix.
 		return Matrix();
 	}
+	Matrix m = Matrix(this->getWidth(), rhs.getHeight());
+	int n = this->getHeight();
+	for (int i = 0; i < m.getWidth(); i++) {
+		for (int j = 0; j < m.getHeight(); j++) {
+			double sum = 0;
+			for (int r = 0; r < n; r++) {
+				sum += this->getElement(i, r) * rhs.getElement(r, j);
+			} //for r
+			m.setElement(sum, i, j);
+		} //for j
+	} //for i
+	return m;
+}
 
+// Part 4-c
+Matrix &Matrix::operator *=(const Matrix &rhs) {
+	return *this = (*this * rhs);
+	//return *this;
 }
