@@ -36,8 +36,8 @@ Matrix::Matrix(unsigned int nR, unsigned int nC) {
 		data[i] = 0;
 }
 
-int Matrix::getPos(int row, int column) const {
-	return (rows*row + column);
+int Matrix::getPos(int r, int c) const {
+	return (rows*r + c);
 }
 
 // Part 2-c: gettin' & settin'
@@ -68,8 +68,54 @@ ostream &operator <<(ostream &outs, const Matrix &rhs) {
 
 // Part 3-a: the deepest of copies
 Matrix &Matrix::operator =(const Matrix &rhs) {
-	this->rows = rhs.getHeight();
-	this->columns = rhs.getWidth();
+	if (!rhs.isValid) {
+		this->invalidate();
+		return *this;
+	}
+
+	// is the appropriate amount of memory already allocated?
+	if (this->getHeight() != rhs.getHeight() || this->getWidth() != rhs.getHeight()) {
+		this->rows = rhs.rows;
+		this->columns = rhs.columns;
+		this->data = new double*[rows*columns];
+	}
+
+	// all right then now to copy the values from rhs over to this
+	for (int i = 0; i < this->getHeight(); i++) {
+		for (int j = 0; j < this->getWidth(); j++) {
+			this->setElement(rhs.getElement(i,j), i, j);
+			// copy those values over B-)
+		}
+	}
+	// The copying could be done with just one for-loop
+	// iterating over data directly. But then what's the point of
+	// all this encapsulation if it's never used?
+	// the compiler and/or preprocessor should take care of it anyway.
 	return *this;
+}
+
+Matrix::Matrix(const Matrix &target)
+	//here's a new thing I just found out about: list initialization.
+	: rows(target.rows)
+	, columns(target.columns)
+	{
+		if (!target.isValid) {
+			this->data = 0;
+			return; // that's all we need to do for invalid matrices.
+		}
+		// for valid ones, however, we need to copy the data from target to this.
+		this->data = new double*[rows*columns];
+		for (int r = 0; r < rows; r++)
+			for (int c = 0; c < columns; c++)
+				setElement(target.getElement(r,c), r, c);
+	// aand that's it.
+}
+
+// invalidates a matrix.
+void Matrix::invalidate() {
+	if (this->data)
+		delete data;
+	this->rows = 0;
+	this->columns = 0;
 }
 

@@ -31,8 +31,8 @@ public:
 	} //The destructor. Should delete any dynamically allocated memory.
 
 	// Part 2-c: gettin' & settin'
-	void setElement(double val, int i, int j);
-	double getElement(int i, int j) const;
+	void setElement(double val, int row, int column);
+	double getElement(int row, int column) const;
 	int getHeight() const { return rows; }
 	int getWidth() const { return columns; }
 
@@ -47,6 +47,8 @@ public:
 
 	// Part 3-a: the deepest of copies
 	Matrix &operator =(const Matrix &rhs);
+	Matrix(const Matrix &target); // copy constructor.
+	void invalidate(); //wait should this even be public?
 };
 
 #endif 
