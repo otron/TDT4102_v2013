@@ -65,6 +65,8 @@ public:
 	// Part 4-c
 	Matrix &operator *=(const Matrix &rhs);
 
+	// Part "This could be useful"
+	void fill(double value);
 
 };
 

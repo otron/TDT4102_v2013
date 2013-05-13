@@ -212,3 +212,9 @@ Matrix &Matrix::operator *=(const Matrix &rhs) {
 	return *this = (*this * rhs);
 	//return *this;
 }
+
+// Part "this could be useful"
+void Matrix::fill(double value) {
+	for (int i = 0; i < rows*columns; i++)
+		this->data[i] = value;
+}

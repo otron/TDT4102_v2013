@@ -1,12 +1,18 @@
 #include "Matrix.h"
-#include <iostream>
+#include "Vector.h"
+#include <iostream> // cout
+#include <time.h> // time
+#include <stdlib.h> //srand, rand
+
 using namespace std;
 void matrixTests();
 void testFour();
+void testSix();
 
 int main() {
 	//matrixTests();
-	testFour();
+	//testFour();
+	testSix();
 	
 	cin.get();
 }
@@ -58,4 +64,23 @@ void testFour() {
 	D += C;
 	cout << D << endl;
 	cout << "Data entry is boring. I don't know what this is supposed to equal.\n";
+}
+
+// Part 6: Understanding what you have done.
+// YOU FOOL! YOU HAVE UNLEASHED THE STRENGTH OF OBJECT ORIENTED PROGRAMMING!
+void testSix() {
+	srand(time(0));
+	Matrix m = Matrix(4,4);
+	Vector v = Vector(4);
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			double d = (rand() / RAND_MAX) * 10;
+			m.setElement(d, i, j);
+		}
+		double d = (rand() / RAND_MAX) * 10;
+		v.setElement(d, i);
+	}
+	cout << "The matrix\n" << m << "\nThe vector\n" << v << endl;
+
+	cout << "The result!\n" << m*v;
 }
