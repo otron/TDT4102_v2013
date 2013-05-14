@@ -1,7 +1,7 @@
 
 // TIL: #pragma once can be used instead of include guards.
 
-#include "Image.h"
+#include "handout\Image.h"
 
 // Part 2: The Image Class
 // Part 2-a: implement the constructor for the Image class.
