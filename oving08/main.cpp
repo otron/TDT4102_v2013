@@ -1,4 +1,5 @@
 #include "handout\Image.h"
+#include "Shape.h"
 #include <iostream>
 
 void testImageFunctionality();
@@ -7,9 +8,21 @@ int main() {
 
 	// Part 2-h: use the SaveImage function.
 	Color fuchsia = Color(193, 84, 193);
-	Image test = Image(10,10);
+	Image test = Image(100,100);
 	test.Fill(fuchsia);
-	test.SetColor(5,5, Color(255, 255, 255));
+	test.SetColor(0, 0, Color(255, 255, 255));
+
+	Color black = Color(0, 0, 0);
+	// testing line
+	Line line = Line(Coord(0, 0), Coord(50, 100), black);
+	//line.Draw(test);
+	Line li = Line(Coord(20, 33), Coord(60, 90), black);
+	//li.Draw(test);
+	Line lid = Line(Coord(80, 60), Coord(0, 50), black);
+	//lid.Draw(test);
+	Line lie = Line(Coord(60, 88), Coord(100, 5), black);
+	lie.Draw(test);
+
 	SaveImage(test, "imageyo.bmp");
 	std::cin.get();
 }
