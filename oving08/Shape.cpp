@@ -30,7 +30,7 @@ Line::Line(const Coord &pointOne, const Coord &pointTwo, const Color &color)
 void Line::Draw(Image &img) const {
 	// wait what's a gradient? Oh right a slope.
 	// damn my math is getting rusty.
-	const float gradient = static_cast<float>(endy - starty) / (endx - startx);
+	float gradient = static_cast<float>(endy - starty) / (endx - startx);
 
 	/*
 		y = gradient(x-x_1)+y1
@@ -51,14 +51,26 @@ void Line::Draw(Image &img) const {
 			img.SetColor(x, y, GetColor());
 		}
 	} else { //draw along the y-axis
+		gradient = static_cast<float>(endx - startx) / (endy - starty);
 		unsigned int x = startx;
-		for (unsigned int y = y1;
-			y < y2+1 && y < img.GetHeight() &&
+		if (starty < endy) {
+			for (unsigned int y = starty;
+			y < endy+1 && y < img.GetHeight() &&
 			x < img.GetWidth() && x < endx;
 			y++) {
-			x = (1/gradient)*(y-starty)+startx;
-			// there's no risk of dividing by 0 as if gradient == 0 then gradient < 1.0f is true.
-			img.SetColor(x, y, GetColor());
+				x = (gradient)*(y-starty)+startx;
+				// there's no risk of dividing by 0 as if gradient == 0 then gradient < 1.0f is true.
+				img.SetColor(x, y, GetColor());
+			}
+		} else {
+			for (unsigned int y = endy;
+			y < starty+1 && y < img.GetHeight() &&
+			x < img.GetWidth() && x < endx;
+			y++) {
+				x = (gradient)*(y-endy)+startx;
+				// there's no risk of dividing by 0 as if gradient == 0 then gradient < 1.0f is true.
+				img.SetColor(x, y, GetColor());
+			}
 		}
 	}
 }
